@@ -11,7 +11,7 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(150, 0, 0, 0),
         title: Center(
           child: Text(
-            "Cardápio",
+            "Sobre nós",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
