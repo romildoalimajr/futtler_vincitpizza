@@ -10,29 +10,39 @@ class CardapioScreen extends StatefulWidget {
 class _CardapioScreenState extends State<CardapioScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(150, 0, 0, 0),
-        title: Center(
-          child: Text(
-            "Cardápio",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(150, 0, 0, 0),
+          title: Center(
+            child: Text(
+              "Cardápio",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.local_pizza, color: Colors.white)),
+              Tab(icon: Icon(Icons.local_drink, color: Colors.white)),
+              Tab(icon: Icon(Icons.icecream, color: Colors.white)),
+            ],
           ),
         ),
-        bottom: const TabBar(
-          tabs: [Tab(icon: Icon(Icons.local_pizza, color: Colors.white))],
-        ),
-      ),
 
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.jpg"),
-            fit: BoxFit.cover,
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
+          child: TabBarView(children: [Column(), Column(), Column()]),
         ),
-        child: TabBarView(children: [Column()]),
       ),
     );
   }
