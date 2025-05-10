@@ -8,6 +8,8 @@ class CardapioScreen extends StatefulWidget {
 }
 
 class _CardapioScreenState extends State<CardapioScreen> {
+  bool carrinhoVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -53,6 +55,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
               child: buildCardapio(),
             ),
             buildCarrinho(),
+            buildCarrinhoFinalizar(),
           ],
         ),
       ),
@@ -165,6 +168,184 @@ class _CardapioScreenState extends State<CardapioScreen> {
   }
 
   Widget buildCarrinho() {
-    return Container(decoration: BoxDecoration(color: Colors.black));
+    return Visibility(
+      visible: carrinhoVisible,
+      child: Container(
+        height: 400,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(225, 0, 0, 0),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 7,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    buildCarrinhoItem(),
+                    buildCarrinhoItem(),
+                    buildCarrinhoItem(),
+                    buildCarrinhoItem(),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.symmetric(
+                        horizontal: BorderSide(width: 5),
+                      ),
+                    ),
+                    child: FloatingActionButton(
+                      onPressed: () {},
+                      heroTag: "cardapio.adicionarmaisitens",
+                      backgroundColor: Color(0xFF8B0000),
+                      child: Text(
+                        "Adicionar mais ítens",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.symmetric(
+                        horizontal: BorderSide(width: 5),
+                      ),
+                    ),
+                    child: FloatingActionButton(
+                      onPressed: () {},
+                      heroTag: "cardapio.finalizarpedido",
+                      backgroundColor: Colors.green,
+                      child: Text(
+                        "Finalizar Pedido",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarrinhoItem() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Pizza Margherita",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "Tamanho: FAMÍLIA",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "Qtde.: 1",
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.green,
+                  ),
+                  child: Icon(Icons.add, color: Colors.white, size: 30),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                  child: Icon(Icons.remove, color: Colors.white, size: 30),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarrinhoFinalizar() {
+    return Visibility(
+      visible: !carrinhoVisible,
+      child: GestureDetector(
+        onTap: () {
+          setState(() => carrinhoVisible = true);
+        },
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(1),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              "Finalizar Pedido",
+              style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
