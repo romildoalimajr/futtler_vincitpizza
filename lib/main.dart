@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futtler_vincitpizza/screens/cardapio_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: ,
+      routes: {"/": (context) => const CardapioScreen()},
     );
   }
 }
