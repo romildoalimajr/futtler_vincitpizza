@@ -1,6 +1,6 @@
 class ProdutoTamanho {
   String? descricao;
-  String? valor;
+  double? valor;
 
   ProdutoTamanho({this.descricao, this.valor});
 

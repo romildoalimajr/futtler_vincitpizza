@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:futtler_vincitpizza/models/pedido.dart';
+import 'package:futtler_vincitpizza/models/pedido_item.dart';
+import 'package:futtler_vincitpizza/models/produto.dart';
+import 'package:futtler_vincitpizza/models/produto_tamanho.dart';
 import 'package:futtler_vincitpizza/navbar.dart';
+import 'package:futtler_vincitpizza/screens/pedido_screen.dart';
 
 class CardapioScreen extends StatefulWidget {
   const CardapioScreen({super.key});
@@ -10,6 +15,93 @@ class CardapioScreen extends StatefulWidget {
 
 class _CardapioScreenState extends State<CardapioScreen> {
   bool carrinhoVisible = false;
+  Pedido pedido = Pedido(items: []);
+  final List<Produto> produtos = [
+    Produto(
+      id: 1,
+      descricao: "Pizza Margherita",
+      ingredientes: "Farinha de trigo, óleo...",
+      categoria: "pizza",
+      imagem: "pizza-margherita.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 2,
+      descricao: "Pizza Quatro Queijos",
+      ingredientes: "Farinha de trigo, óleo...",
+      categoria: "pizza",
+      imagem: "pizza-quatro-queijos.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 3,
+      descricao: "Pizza Frango com Catupiry",
+      ingredientes: "Farinha de trigo, óleo...",
+      categoria: "pizza",
+      imagem: "pizza-frango-catupiry.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 4,
+      descricao: "Refrigerante Coca-Cola",
+      ingredientes: "Saboroso e Refrescante sabor cola.",
+      categoria: "bebida",
+      imagem: "bebida-coca-cola.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "600ml", valor: 5.90),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 5,
+      descricao: "Sorvete Napolitano",
+      ingredientes: "Sobremesa de Sorvete tipo napolitano.",
+      categoria: "sobremesa",
+      imagem: "sobremesa-sorvete-napolitano.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "600ml", valor: 5.90),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 6,
+      descricao: "Torta Mesclada",
+      ingredientes: "Sobremesa de Torta mesclada.",
+      categoria: "sobremesa",
+      imagem: "sobremesa-torta-mesclada.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "600ml", valor: 5.90),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+    Produto(
+      id: 7,
+      descricao: "Água Mineral",
+      ingredientes: "Água mineral das melhores fontes.",
+      categoria: "bebida",
+      imagem: "bebida-agua-mineral.jpg",
+      tamanhos: [
+        ProdutoTamanho(descricao: "600ml", valor: 5.90),
+        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
+        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
+      ],
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -70,27 +162,36 @@ class _CardapioScreenState extends State<CardapioScreen> {
       children: [
         SingleChildScrollView(
           child: Column(
-            children: [
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-              buildCardapioItem(),
-            ],
+            children:
+                produtos
+                    .where((produto) => produto.categoria == "pizza")
+                    .map((produto) => buildCardapioItem(produto))
+                    .toList(),
           ),
         ),
-        Column(),
-        Column(),
+        SingleChildScrollView(
+          child: Column(
+            children:
+                produtos
+                    .where((produto) => produto.categoria == "bebida")
+                    .map((produto) => buildCardapioItem(produto))
+                    .toList(),
+          ),
+        ),
+        SingleChildScrollView(
+          child: Column(
+            children:
+                produtos
+                    .where((produto) => produto.categoria == "sobremesa")
+                    .map((produto) => buildCardapioItem(produto))
+                    .toList(),
+          ),
+        ),
       ],
     );
   }
 
-  Widget buildCardapioItem() {
+  Widget buildCardapioItem(Produto produto) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Container(
@@ -115,7 +216,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        "assets/images/cardapio/pizza-margherita.jpg",
+                        "assets/images/cardapio/${produto.imagem}",
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -138,11 +239,11 @@ class _CardapioScreenState extends State<CardapioScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Pizza Margherita",
+                      produto.descricao!,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Text(
-                      "Molho de tomate, mussarela, majericão fresco, azeite de oliva.",
+                      produto.ingredientes!,
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ],
@@ -153,7 +254,20 @@ class _CardapioScreenState extends State<CardapioScreen> {
               flex: 1,
               child: GestureDetector(
                 onTap: () {
-                  print("Teste botão add!...");
+                  var result = retornarTamanho(context, produto);
+
+                  result.then((tamanho) {
+                    if (tamanho != null) {
+                      var pedidoItem = PedidoItem(
+                        produto: produto,
+                        produtoTamanho: tamanho,
+                        quantidade: 1,
+                        total: tamanho.valor,
+                      );
+
+                      setState(() => pedido.items!.add(pedidoItem));
+                    }
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -172,7 +286,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
 
   Widget buildCarrinho() {
     return Visibility(
-      visible: carrinhoVisible,
+      visible: pedido.items!.isNotEmpty && carrinhoVisible,
       child: Container(
         height: 400,
         decoration: BoxDecoration(
@@ -188,12 +302,10 @@ class _CardapioScreenState extends State<CardapioScreen> {
               flex: 7,
               child: SingleChildScrollView(
                 child: Column(
-                  children: [
-                    buildCarrinhoItem(),
-                    buildCarrinhoItem(),
-                    buildCarrinhoItem(),
-                    buildCarrinhoItem(),
-                  ],
+                  children:
+                      pedido.items!
+                          .map((produtoItem) => buildCarrinhoItem(produtoItem))
+                          .toList(),
                 ),
               ),
             ),
@@ -209,7 +321,9 @@ class _CardapioScreenState extends State<CardapioScreen> {
                       ),
                     ),
                     child: FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => carrinhoVisible = false);
+                      },
                       heroTag: "cardapio.adicionarmaisitens",
                       backgroundColor: Color(0xFF8B0000),
                       child: Text(
@@ -226,7 +340,15 @@ class _CardapioScreenState extends State<CardapioScreen> {
                       ),
                     ),
                     child: FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PedidoScreen(),
+                            settings: RouteSettings(arguments: pedido),
+                          ),
+                        );
+                      },
                       heroTag: "cardapio.finalizarpedido",
                       backgroundColor: Colors.green,
                       child: Text(
@@ -244,7 +366,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
     );
   }
 
-  Widget buildCarrinhoItem() {
+  Widget buildCarrinhoItem(PedidoItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
@@ -264,7 +386,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
                     Row(
                       children: [
                         Text(
-                          "Pizza Margherita",
+                          item.produto!.descricao!,
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ],
@@ -274,14 +396,14 @@ class _CardapioScreenState extends State<CardapioScreen> {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            "Tamanho: FAMÍLIA",
+                            item.produtoTamanho!.descricao!,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Text(
-                            "Qtde.: 1",
+                            "Qtde.: ${item.quantidade}",
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.end,
                           ),
@@ -295,7 +417,16 @@ class _CardapioScreenState extends State<CardapioScreen> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    int qtde = item.quantidade! + 1;
+                    double valor = item.produtoTamanho!.valor!;
+                    double total = qtde * valor;
+
+                    item.quantidade = qtde;
+                    item.total = total;
+                  });
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -308,7 +439,25 @@ class _CardapioScreenState extends State<CardapioScreen> {
             Expanded(
               flex: 1,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    int qtde = item.quantidade! - 1;
+
+                    if (qtde > 0) {
+                      double valor = item.produtoTamanho!.valor!;
+                      double total = qtde * valor;
+
+                      item.quantidade = qtde;
+                      item.total = total;
+                    } else {
+                      pedido.items!.remove(item);
+                    }
+
+                    if (pedido.items!.isEmpty) {
+                      carrinhoVisible = false;
+                    }
+                  });
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -326,7 +475,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
 
   Widget buildCarrinhoFinalizar() {
     return Visibility(
-      visible: !carrinhoVisible,
+      visible: pedido.items!.isNotEmpty && !carrinhoVisible,
       child: GestureDetector(
         onTap: () {
           setState(() => carrinhoVisible = true);
@@ -349,6 +498,47 @@ class _CardapioScreenState extends State<CardapioScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<ProdutoTamanho> retornarTamanho(
+    BuildContext context,
+    Produto produto,
+  ) async {
+    List<ProdutoTamanho> tamanhos = produto.tamanhos!;
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(225, 0, 0, 0),
+          title: Text(
+            produto.descricao!,
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            "Escolha um tamanho",
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          actions:
+              tamanhos.map((tamanho) {
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FloatingActionButton(
+                      heroTag: "cardapio.tamanho.${tamanho.descricao}",
+                      child: Text(
+                        "${tamanho.descricao} (R\$ ${tamanho.valor})",
+                      ),
+                      onPressed: () => Navigator.of(context).pop(tamanho),
+                    ),
+                  ),
+                );
+              }).toList(),
+        );
+      },
     );
   }
 }

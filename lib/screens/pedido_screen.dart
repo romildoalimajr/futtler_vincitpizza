@@ -102,7 +102,7 @@ class _PedidoScreenState extends State<PedidoScreen> {
   Widget buildPedidoItem() {
     return Padding(
       padding: const EdgeInsets.only(top: 5),
-      child: Container(
+      child: SizedBox(
         height: 40,
 
         child: Row(
