@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futtler_vincitpizza/navbar.dart';
 
 class CardapioScreen extends StatefulWidget {
   const CardapioScreen({super.key});
@@ -16,8 +17,10 @@ class _CardapioScreenState extends State<CardapioScreen> {
       length: 3,
       child: Scaffold(
         extendBodyBehindAppBar: true,
+        drawer: Navbar(),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(150, 0, 0, 0),
+          iconTheme: IconThemeData(color: Colors.white),
           title: Center(
             child: Text(
               "Cardápio",

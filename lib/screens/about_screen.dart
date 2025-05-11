@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:futtler_vincitpizza/navbar.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -13,12 +14,14 @@ class AboutScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: "about.facebook",
             onPressed: () {},
             backgroundColor: Color(0xff1877f2),
             child: const FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
           ),
           SizedBox(height: 10),
           FloatingActionButton(
+            heroTag: "about.whatsapp",
             onPressed: () {},
             backgroundColor: Color(0xff25d366),
             child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white),
@@ -28,6 +31,7 @@ class AboutScreen extends StatelessWidget {
 
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(150, 0, 0, 0),
+        iconTheme: IconThemeData(color: Colors.white),
         title: Center(
           child: Text(
             "Sobre a VinciPizza",
@@ -35,6 +39,7 @@ class AboutScreen extends StatelessWidget {
           ),
         ),
       ),
+      drawer: Navbar(),
       body: Container(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + kToolbarHeight,

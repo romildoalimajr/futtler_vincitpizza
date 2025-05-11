@@ -14,6 +14,7 @@ class _PedidoScreenState extends State<PedidoScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(150, 0, 0, 0),
+        iconTheme: IconThemeData(color: Colors.white),
         title: Center(
           child: Text(
             "Pedido",
@@ -42,6 +43,7 @@ class _PedidoScreenState extends State<PedidoScreen> {
                 child: SizedBox(
                   width: double.infinity,
                   child: FloatingActionButton(
+                    heroTag: "pedido.enviar",
                     onPressed: () {},
                     backgroundColor: Colors.green,
                     child: Text(
