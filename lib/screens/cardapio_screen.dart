@@ -5,6 +5,7 @@ import 'package:futtler_vincitpizza/models/produto.dart';
 import 'package:futtler_vincitpizza/models/produto_tamanho.dart';
 import 'package:futtler_vincitpizza/navbar.dart';
 import 'package:futtler_vincitpizza/screens/pedido_screen.dart';
+import 'package:intl/intl.dart';
 
 class CardapioScreen extends StatefulWidget {
   const CardapioScreen({super.key});
@@ -16,6 +17,7 @@ class CardapioScreen extends StatefulWidget {
 class _CardapioScreenState extends State<CardapioScreen> {
   bool carrinhoVisible = false;
   Pedido pedido = Pedido(items: []);
+  final format = NumberFormat("#,##0.00", "pt_BR");
   final List<Produto> produtos = [
     Produto(
       id: 1,
@@ -530,7 +532,7 @@ class _CardapioScreenState extends State<CardapioScreen> {
                     child: FloatingActionButton(
                       heroTag: "cardapio.tamanho.${tamanho.descricao}",
                       child: Text(
-                        "${tamanho.descricao} (R\$ ${tamanho.valor})",
+                        "${tamanho.descricao} (R\$ ${format.format(tamanho.valor)})",
                       ),
                       onPressed: () => Navigator.of(context).pop(tamanho),
                     ),
