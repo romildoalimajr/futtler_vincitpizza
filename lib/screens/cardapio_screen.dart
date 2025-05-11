@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:futtler_vincitpizza/models/pedido.dart';
 import 'package:futtler_vincitpizza/models/pedido_item.dart';
 import 'package:futtler_vincitpizza/models/produto.dart';
@@ -18,95 +21,12 @@ class _CardapioScreenState extends State<CardapioScreen> {
   bool carrinhoVisible = false;
   Pedido pedido = Pedido(items: []);
   final format = NumberFormat("#,##0.00", "pt_BR");
-  final List<Produto> produtos = [
-    Produto(
-      id: 1,
-      descricao: "Pizza Margherita",
-      ingredientes: "Farinha de trigo, óleo...",
-      categoria: "pizza",
-      imagem: "pizza-margherita.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 2,
-      descricao: "Pizza Quatro Queijos",
-      ingredientes: "Farinha de trigo, óleo...",
-      categoria: "pizza",
-      imagem: "pizza-quatro-queijos.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 3,
-      descricao: "Pizza Frango com Catupiry",
-      ingredientes: "Farinha de trigo, óleo...",
-      categoria: "pizza",
-      imagem: "pizza-frango-catupiry.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "PEQUENA", valor: 15.00),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 4,
-      descricao: "Refrigerante Coca-Cola",
-      ingredientes: "Saboroso e Refrescante sabor cola.",
-      categoria: "bebida",
-      imagem: "bebida-coca-cola.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "600ml", valor: 5.90),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 5,
-      descricao: "Sorvete Napolitano",
-      ingredientes: "Sobremesa de Sorvete tipo napolitano.",
-      categoria: "sobremesa",
-      imagem: "sobremesa-sorvete-napolitano.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "600ml", valor: 5.90),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 6,
-      descricao: "Torta Mesclada",
-      ingredientes: "Sobremesa de Torta mesclada.",
-      categoria: "sobremesa",
-      imagem: "sobremesa-torta-mesclada.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "600ml", valor: 5.90),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-    Produto(
-      id: 7,
-      descricao: "Água Mineral",
-      ingredientes: "Água mineral das melhores fontes.",
-      categoria: "bebida",
-      imagem: "bebida-agua-mineral.jpg",
-      tamanhos: [
-        ProdutoTamanho(descricao: "600ml", valor: 5.90),
-        ProdutoTamanho(descricao: "MÉDIA", valor: 25.00),
-        ProdutoTamanho(descricao: "GRANDE", valor: 40.00),
-      ],
-    ),
-  ];
+  List<Produto> produtos = [];
 
   @override
   Widget build(BuildContext context) {
+    carregarProdutos().then((value) => {setState(() => produtos = value)});
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -542,5 +462,18 @@ class _CardapioScreenState extends State<CardapioScreen> {
         );
       },
     );
+  }
+
+  Future<List<Produto>> carregarProdutos() async {
+    String jsonString = await rootBundle.loadString(
+      "assets/data/produtos.json",
+    );
+
+    List<dynamic> jsonList = jsonDecode(jsonString);
+
+    List<Produto> result =
+        jsonList.map((json) => Produto.fromJson(json)).toList();
+
+    return result;
   }
 }
